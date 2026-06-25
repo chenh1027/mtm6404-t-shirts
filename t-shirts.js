@@ -94,20 +94,20 @@ function TShirt({ tshirt }) {
 
   return (
     <div>
-       /* Display the t-shirt image */
+       {/* Display the t-shirt image */}
       <img
         src={`images/${tshirt.image}`}
         alt={tshirt.title}
         width="250"
       />
-/* Display the title, price, and remaining stock */
+{/* Display the title, price, and remaining stock */}
       <h2>{tshirt.title}</h2>
 
       <p>Price: ${tshirt.price}</p>
 
       <p>Stock remaining: {stock}</p>
 
-/* Only display the select box and buy button when stock is available */
+{/* Only display the select box and buy button when stock is available */}
       {stock > 0 ? (
         <div>
           <select
