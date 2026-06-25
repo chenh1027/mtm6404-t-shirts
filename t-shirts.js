@@ -63,3 +63,88 @@ const tshirts = [
     quantity: 1
   }
 ]
+
+// Display and manage one t-shirt
+function TShirt({ tshirt }) {
+  // Store the current stock and selected quantity
+  const [stock, setStock] = React.useState(tshirt.stock)
+  const [quantity, setQuantity] = React.useState(tshirt.quantity)
+
+  // Update the quantity when the user selects an option
+  function quantityHandler(e) {
+    setQuantity(Number(e.target.value))
+  }
+
+   // Decrease the stock by the selected quantity
+  function buyHandler() {
+    setStock(stock - quantity)
+    setQuantity(1)
+  }
+
+  // Create quantity options from 1 to the remaining stock
+  const quantityOptions = []
+
+  for (let i = 1; i <= stock; i++) {
+    quantityOptions.push(
+      <option key={i} value={i}>
+        {i}
+      </option>
+    )
+  }
+
+  return (
+    <div>
+       /* Display the t-shirt image */
+      <img
+        src={`images/${tshirt.image}`}
+        alt={tshirt.title}
+        width="250"
+      />
+/* Display the title, price, and remaining stock */
+      <h2>{tshirt.title}</h2>
+
+      <p>Price: ${tshirt.price}</p>
+
+      <p>Stock remaining: {stock}</p>
+
+/* Only display the select box and buy button when stock is available */
+      {stock > 0 ? (
+        <div>
+          <select
+            value={quantity}
+            onChange={quantityHandler}
+          >
+            {quantityOptions}
+          </select>
+
+          <button onClick={buyHandler}>
+            Buy
+          </button>
+        </div>
+      ) : (
+        <p>Out of Stock</p>
+      )}
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <div>
+      <h1>T-Shirts</h1>
+
+      {tshirts.map((tshirt, index) => (
+        <TShirt
+          key={index}
+          tshirt={tshirt}
+        />
+      ))}
+    </div>
+  )
+}
+
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)
